@@ -8,7 +8,7 @@ import io
 st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
 
 # Path to the Excel file
-data_path = r"C:\Users\tymos\Downloads\Values.xlsx"
+data_path = os.path.join(os.getcwd(), "Values.xlsx")
 
 # Load existing data
 try:
