@@ -3,6 +3,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 import io
+from PIL import Image
+
+# Set wide screen layout and menu title
+st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
+
+# Path to the logo
+logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
+
+# Display the logo at the top of the app
+st.sidebar.image(logo_path, use_column_width=True, caption="Bedrijfsnaam")
+
 
 # Instellen van breed scherm en menu titel
 st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
