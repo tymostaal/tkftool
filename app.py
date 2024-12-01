@@ -6,9 +6,6 @@ from datetime import datetime
 import io
 from PIL import Image
 
-# Set wide screen layout and menu title
-st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
-
 # Path to the logo
 logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
 
