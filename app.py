@@ -6,6 +6,9 @@ from datetime import datetime
 import io
 from PIL import Image
 
+# Instellen van breed scherm en menu titel
+st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
+
 # Path to the logo
 logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
 
@@ -13,8 +16,7 @@ logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
 st.sidebar.image(logo_path, use_column_width=True, caption="Bedrijfsnaam")
 
 
-# Instellen van breed scherm en menu titel
-st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
+
 
 # Path to the Excel file
 data_path = os.path.join(os.getcwd(), "Values.xlsx")
