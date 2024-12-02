@@ -9,14 +9,15 @@ from PIL import Image
 # Instellen van breed scherm en menu titel
 st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
 
-# Path to the logo
+# Pad naar het logo
 logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
 
-# Display the logo at the top of the app
-st.sidebar.image(logo_path, use_column_width=True, caption="Bedrijfsnaam")
-
-
-
+# Sidebar met logo
+with st.sidebar:
+    cols = st.columns([1, 3, 1])  # Verdeling van ruimte voor centrering
+    with cols[1]:  # Logo plaatsen in het midden
+        logo = Image.open(logo_path)
+        st.image(logo, use_column_width=True)
 
 # Path to the Excel file
 data_path = os.path.join(os.getcwd(), "Values.xlsx")
@@ -28,6 +29,7 @@ except FileNotFoundError:
     # Create een lege DataFrame als het bestand niet bestaat
     data = pd.DataFrame(columns=[
         "Datum",
+        "Medewerker",
         "Koper Trekolie Vetgehalte CU %",
         "Koper Gloeier Vetgehalte CU %",
         "Koper Trekolie pH Waarde",
@@ -52,19 +54,23 @@ normal_ranges = {
 
 # Sidebar menu with buttons
 st.sidebar.title("Navigatie")
-if st.sidebar.button("Data Entry"):
+if st.sidebar.button("Data Input"):
     menu = "Data Entry"
-elif st.sidebar.button("Visualisatie"):
+elif st.sidebar.button("Dashboard"):
     menu = "Visualisatie"
 else:
     menu = "Data Entry"  # Standaard pagina
 
 # Data Entry Page
 if menu == "Data Entry":
-    st.title("Data Entry")
-    col1, col2 = st.columns(2)
+    st.title("Data Input")
 
     with st.form("data_entry_form"):
+        # Medewerker keuzeveld
+        medewerker = st.selectbox("Medewerker", ["", "Henno", "Erik", "Jan"], index=0)
+
+        col1, col2 = st.columns(2)
+
         # Koper Columns
         with col1:
             st.subheader("Koper - Vetgehalte CU %")
@@ -86,13 +92,14 @@ if menu == "Data Entry":
             aluminum_gloeier_ph = st.number_input("Gloeier pH Waarde", step=0.1, format="%.2f", key="aluminum_gloeier_ph")
 
         # Submit button
-        submitted = st.form_submit_button("Submit")
+        submitted = st.form_submit_button("Submit", use_container_width=True, help="Druk op de knop om de gegevens op te slaan")
 
     # Process the form submission
     if submitted:
         # Create a new row with the input values
         new_entry = {
             "Datum": [datetime.now().strftime("%Y-%m-%d")],  # Alleen datum opslaan
+            "Medewerker": [medewerker],
             "Koper Trekolie Vetgehalte CU %": [koper_trekolie_cu],
             "Koper Gloeier Vetgehalte CU %": [koper_gloeier_cu],
             "Koper Trekolie pH Waarde": [koper_trekolie_ph],
@@ -113,12 +120,12 @@ if menu == "Data Entry":
 
 # Visualisatie Page
 elif menu == "Visualisatie":
-    st.title("Visualisatie van Data")
+    st.title("Dashboard")
 
     if data.empty:
         st.warning("Geen gegevens beschikbaar om te visualiseren.")
     else:
-        st.write("Hier zijn de grafieken voor de laatste 10 datapunten:")
+        
 
         # Download knop voor alle data
         buffer = io.BytesIO()
