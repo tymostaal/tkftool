@@ -12,7 +12,7 @@ st.set_page_config(layout="wide", page_title="Data App", page_icon="📊")
 # Pad naar het logo
 logo_path = os.path.join(os.getcwd(), "tkf_logo.png")
 print("Test")
-
+print("Branchetest")
 
 # Sidebar met logo
 with st.sidebar:
